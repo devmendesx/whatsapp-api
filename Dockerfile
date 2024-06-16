@@ -1,8 +1,9 @@
 # Use the official Node.js Alpine image as the base image
 FROM node:20-alpine
 
+RUN mkdir -p /usr/app
 # Set the working directory
-WORKDIR /usr/src/app
+WORKDIR /usr/app
 
 # Install Chromium
 ENV CHROME_BIN="/usr/bin/chromium-browser" \
@@ -17,12 +18,6 @@ RUN set -x \
     chromium
 
 # Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
-
-# Install the dependencies
-RUN npm ci --only=production --ignore-scripts
-
-# Copy the rest of the source code to the working directory
 COPY . .
 
 # Expose the port the API will run on
